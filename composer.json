@@ -1,0 +1,32 @@
+{
+    "name": "razonyang/php-opencc",
+    "description": "Open Chinese Convert 中文简繁体转换",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "razonyang",
+            "email": "razonyang@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ext-opencc": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "RazonYang\\OpenCC\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RazonYang\\OpenCC\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --coverage-clover=coverage.xml"
+    }
+}

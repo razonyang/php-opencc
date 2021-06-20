@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-versions: ['7.3', '7.4', '8.0', '8.1']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+    
+    - name: Setup PHP with opencc4php from source
+      uses: shivammathur/setup-php@v2
+      with:
+        extensions: opencc-nauxliu/opencc4php@master
+        coverage: xdebug
+      env:
+        OPENCC_LIBS: libopencc-dev
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run test suite
+      run: composer run-script test
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
